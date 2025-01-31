@@ -1,27 +1,26 @@
-import styled from 'styled-components';
 import GlobalStyles from './styles/GlobalStyles';
-
-const H1 = styled.h1`
-  font-size: 30px;
-  font-weight: 600;
-`;
-
-const Button = styled.button`
-  font-size: 1.4rem;
-  padding: 1.2rem 1.6rem;
-  font-weight: 500;
-  border: none;
-  border-radius: 7px;
-  background-color: #f72585;
-  color: #fff;
-`;
+import Button from './ui/Button';
+import Heading from './ui/Heading';
+import Row from './ui/Row';
 
 function App() {
   return (
     <>
       <GlobalStyles />
-      <H1>Hello, world!</H1>
-      <Button>Click me</Button>
+      <Row type='horizontal'>
+        <Heading as='h1'>Form</Heading>
+        <Heading as='h2'>User</Heading>
+      </Row>
+      <Button variation='primary' size='medium'>
+        Check in
+      </Button>
+      <Heading as='h3'>Check in Check out</Heading>
+      <Button variation='secondary' size='small'>
+        Check out!
+      </Button>
+      <Button variation='danger' size='small'>
+        Delete
+      </Button>
     </>
   );
 }
