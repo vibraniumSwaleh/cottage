@@ -80,10 +80,10 @@ body {
   line-height: 1.5;
   font-size: 1.6rem;
 
-  
-  scrollbar-gutter: stable;
-  scrollbar-color: var(--color-grey-200) var(--color-grey-50);
-  scrollbar-width: thin;
+  overflow: hidden;
+  // scrollbar-gutter: stable;
+  // scrollbar-color: var(--color-grey-200) var(--color-grey-50);
+  // scrollbar-width: thin;
 }
 
 input,

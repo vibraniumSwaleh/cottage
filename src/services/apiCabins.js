@@ -7,7 +7,11 @@ export async function getCabins() {
   return data;
 }
 
-export async function createCabin(newCabin) {
+export async function createCabin(newCabin)
+{
+  // https://alcvrrgdemcutlhtlvkn.supabase.co/storage/v1/object/public/cabin-images//cabin-001.jpg
+  
+
   const { data, error } = await supabase
     .from('cabins')
     .insert([newCabin])
