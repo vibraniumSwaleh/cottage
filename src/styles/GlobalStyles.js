@@ -79,6 +79,11 @@ body {
   min-height: 100vh;
   line-height: 1.5;
   font-size: 1.6rem;
+
+  
+  scrollbar-gutter: stable;
+  scrollbar-color: var(--color-grey-200) var(--color-grey-50);
+  scrollbar-width: thin;
 }
 
 input,
