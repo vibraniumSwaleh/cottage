@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { getCabins } from '../../services/apiCabins';
 import Spinner from '../../ui/Spinner';
 import CabinRow from './CabinRow';
+import { useState } from 'react';
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -29,6 +30,8 @@ const TableHeader = styled.header`
 `;
 
 function CabinTable() {
+  const [activeCabinId, setActiveCabinId] = useState(null);
+
   const {
     isLoading,
     data: cabins,
@@ -48,7 +51,12 @@ function CabinTable() {
         <div>Action</div>
       </TableHeader>
       {cabins.map((cabin) => (
-        <CabinRow cabin={cabin} key={cabin.id} />
+        <CabinRow
+          cabin={cabin}
+          key={cabin.id}
+          setActiveCabinId={setActiveCabinId}
+          isActive={activeCabinId === cabin.id}
+        />
       ))}
     </Table>
   );

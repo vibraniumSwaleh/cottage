@@ -55,7 +55,7 @@ const ShowForm = styled.div`
   border-bottom: 1.5px solid var(--color-grey-400);
 `;
 
-function CabinRow({ cabin }) {
+function CabinRow({ cabin, setActiveCabinId, isActive }) {
   const [showForm, setShowForm] = useState(false);
   const {
     id: cabinId,
@@ -88,15 +88,15 @@ function CabinRow({ cabin }) {
         <Price>{formatCurrency(regularPrice)}</Price>
         <Discount>{formatCurrency(discount)}</Discount>
         <ButtonGroup>
-          <button onClick={() => setShowForm((showForm) => !showForm)}>
-            Edit
+          <button onClick={() => setActiveCabinId(isActive ? null : cabinId)}>
+            {isActive ? 'Close' : 'Edit'}
           </button>
           <button onClick={() => mutate(cabinId)} disabled={isDeleting}>
             Delete
           </button>
         </ButtonGroup>
       </TableRow>
-      {showForm && (
+      {isActive && (
         <ShowForm>
           <CreateCabinForm cabinToEdit={cabin} />
         </ShowForm>

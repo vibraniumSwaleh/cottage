@@ -7,16 +7,32 @@ export async function getCabins() {
   return data;
 }
 
-export async function createCabin(newCabin) {
-  // https://alcvrrgdemcutlhtlvkn.supabase.co/storage/v1/object/public/cabin-images//cabin-001.jpg
-  const imageName = `${Math.random()}-${newCabin.image.name}`;
-  console.log(imageName);
-  const imagePath = `${superbaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
+export async function createEditCabin(newCabin, id) {
+  const hasImagePath = newCabin.image?.startsWith?.(superbaseUrl);
+  console.log('hasImagePath: ', hasImagePath);
+  console.log('Image name: ', newCabin.image.name);
 
-  const { data, error } = await supabase
-    .from('cabins')
-    .insert([{ ...newCabin, image: imagePath }])
-    .select();
+  const imageName = `${Math.random()}-${newCabin.image.name}`;
+  console.log('imageName: ', imageName);
+
+  const imagePath = hasImagePath
+    ? newCabin.image
+    : `${superbaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
+  console.log('imagePath: ', imagePath);
+
+  let query = supabase.from('cabins');
+
+  if (!id) {
+    query = query.insert([{ ...newCabin, image: imagePath }]);
+    console.log('inserted...');
+  }
+
+  if (id) {
+    query = query.update({ ...newCabin, image: imagePath }).eq('id', id);
+    console.log('Updated...');
+  }
+
+  const { data, error } = await query.select().single();
 
   if (error) throw new Error('Cabin could not be created');
 
