@@ -12,7 +12,6 @@ export function useEditCabin() {
         queryKey: ['cabins'],
       });
       toast.success(`Cabin successfuly edited`);
-      reset();
     },
     onError: (err) => toast.error(err.message),
   });

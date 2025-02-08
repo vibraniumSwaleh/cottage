@@ -4,9 +4,6 @@ import Button from '../../ui/Button';
 import FileInput from '../../ui/FileInput';
 import Textarea from '../../ui/Textarea';
 import { useForm } from 'react-hook-form';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createEditCabin } from '../../services/apiCabins';
-import toast from 'react-hot-toast';
 import FormRow from '../../ui/FromRow';
 import { useCreateCabin } from './useCreateCabin';
 import { useEditCabin } from './useEditCabin';
@@ -29,9 +26,15 @@ function CreateCabinForm({ cabinToEdit = {} }) {
     const image = typeof data.image === 'string' ? data.image : data.image[0];
     if (isEditSession)
       editCabin({ editCabinData: { ...data, image }, id: editId });
-    else createCabin({ ...data, image: data.image[0] });
-
-    console.log(data);
+    else
+      createCabin(
+        { ...data, image: data.image[0] },
+        {
+          onSuccess: (data) => {
+            reset();
+          },
+        },
+      );
   };
 
   return (
