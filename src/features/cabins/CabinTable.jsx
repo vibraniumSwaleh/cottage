@@ -40,12 +40,12 @@ function CabinTable() {
   return (
     <Table role='table'>
       <TableHeader role='row'>
-        <div>---</div>
+        <div>image</div>
         <div>Cabin</div>
         <div>Capacity</div>
         <div>Price</div>
         <div>Discount</div>
-        <div>---</div>
+        <div>Action</div>
       </TableHeader>
       {cabins.map((cabin) => (
         <CabinRow cabin={cabin} key={cabin.id} />

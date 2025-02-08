@@ -9,9 +9,14 @@ import { createCabin } from '../../services/apiCabins';
 import toast from 'react-hot-toast';
 import FormRow from '../../ui/FromRow';
 
-function CreateCabinForm() {
+function CreateCabinForm({ cabinToEdit }) {
+  const { id: editId, ...editValues } = cabinToEdit;
   const queryClient = useQueryClient();
-  const { register, handleSubmit, reset, getValues, formState } = useForm();
+  const isEditSession = Boolean(editId);
+
+  const { register, handleSubmit, reset, getValues, formState } = useForm({
+    defaultValues: isEditSession ? editValues : {},
+  });
   const { errors } = formState;
 
   const { isLoading: isCreating, mutate } = useMutation({
