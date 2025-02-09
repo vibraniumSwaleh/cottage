@@ -72,14 +72,16 @@ function CabinRow({ cabin, setActiveCabinId, isActive }) {
     description,
   } = cabin;
   // console.log('CabinRow: ', cabin);
-  const newCabin = {
-    name,
-    maxCapacity,
-    regularPrice,
-    discount,
-    description,
-    image,
-  };
+  function handleDuplicate() {
+    createCabin({
+      name: `copy of ${name}`,
+      maxCapacity,
+      regularPrice,
+      discount,
+      description,
+      image,
+    });
+  }
   //console.log('newCabin: ', newCabin);
 
   return (
@@ -95,7 +97,7 @@ function CabinRow({ cabin, setActiveCabinId, isActive }) {
           <span>&mdash;</span>
         )}
         <ButtonGroup>
-          <button onClick={() => createCabin(newCabin)}>
+          <button onClick={handleDuplicate}>
             <HiSquare2Stack />
           </button>
           <button onClick={() => setActiveCabinId(isActive ? null : cabinId)}>
