@@ -1,11 +1,14 @@
 import styled from 'styled-components';
 import { formatCurrency } from '../../utils/helpers';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteCabin } from '../../services/apiCabins';
-import toast from 'react-hot-toast';
-import { useState } from 'react';
 import CreateCabinForm from './CreateCabinForm';
 import { useDeleteCabin } from './useDeleteCabin';
+import {
+  HiOutlinePencil,
+  HiPencilSquare,
+  HiSquare2Stack,
+  HiTrash,
+} from 'react-icons/hi2';
+import { useCreateCabin } from './useCreateCabin';
 
 const TableRow = styled.div`
   display: grid;
@@ -49,7 +52,7 @@ const Discount = styled.div`
 
 const ButtonGroup = styled.div`
   display: flex;
-  gap: 0.5rem;
+  gap: 0.6rem;
 `;
 
 const ShowForm = styled.div`
@@ -57,6 +60,7 @@ const ShowForm = styled.div`
 `;
 
 function CabinRow({ cabin, setActiveCabinId, isActive }) {
+  const { isCreating, createCabin } = useCreateCabin();
   const { isDeleting, deleteCabin } = useDeleteCabin();
   const {
     id: cabinId,
@@ -65,7 +69,18 @@ function CabinRow({ cabin, setActiveCabinId, isActive }) {
     regularPrice,
     discount,
     image,
+    description,
   } = cabin;
+  // console.log('CabinRow: ', cabin);
+  const newCabin = {
+    name,
+    maxCapacity,
+    regularPrice,
+    discount,
+    description,
+    image,
+  };
+  //console.log('newCabin: ', newCabin);
 
   return (
     <>
@@ -80,11 +95,14 @@ function CabinRow({ cabin, setActiveCabinId, isActive }) {
           <span>&mdash;</span>
         )}
         <ButtonGroup>
+          <button onClick={() => createCabin(newCabin)}>
+            <HiSquare2Stack />
+          </button>
           <button onClick={() => setActiveCabinId(isActive ? null : cabinId)}>
-            {isActive ? 'Close' : 'Edit'}
+            {isActive ? <HiPencilSquare /> : <HiOutlinePencil />}
           </button>
           <button onClick={() => deleteCabin(cabinId)} disabled={isDeleting}>
-            Delete
+            <HiTrash />
           </button>
         </ButtonGroup>
       </TableRow>
