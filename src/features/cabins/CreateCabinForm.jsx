@@ -25,7 +25,15 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
   const onSubmit = function (data) {
     const image = typeof data.image === 'string' ? data.image : data.image[0];
     if (isEditSession)
-      editCabin({ editCabinData: { ...data, image }, id: editId });
+      editCabin(
+        { editCabinData: { ...data, image }, id: editId },
+        {
+          onSuccess: (data) => {
+            reset();
+            onCloseModal?.();
+          },
+        },
+      );
     else
       createCabin(
         { ...data, image: data.image[0] },
@@ -39,7 +47,10 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
   };
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form
+      onSubmit={handleSubmit(onSubmit)}
+      type={onCloseModal ? 'modal' : 'regular'}
+    >
       <FormRow label='Cabin name' error={errors?.name?.message}>
         <Input
           disabled={isWorking}
@@ -122,7 +133,6 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
       </FormRow>
 
       <FormRow>
-        {/* type is an HTML attribute! */}
         <Button
           variation='secondary'
           type='reset'
