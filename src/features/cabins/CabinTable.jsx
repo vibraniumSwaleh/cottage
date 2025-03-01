@@ -20,14 +20,17 @@ function CabinTable() {
         <div>Discount</div>
         <div>Action</div>
       </Table.Header>
-      {cabins.map((cabin) => (
-        <CabinRow
-          cabin={cabin}
-          key={cabin.id}
-          setActiveCabinId={setActiveCabinId}
-          isActive={activeCabinId === cabin.id}
-        />
-      ))}
+      <Table.Body
+        data={cabins}
+        render={(cabin) => (
+          <CabinRow
+            cabin={cabin}
+            key={cabin.id}
+            setActiveCabinId={setActiveCabinId}
+            isActive={activeCabinId === cabin.id}
+          />
+        )}
+      />
     </Table>
   );
 }
