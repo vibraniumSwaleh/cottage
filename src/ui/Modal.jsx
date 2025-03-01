@@ -2,13 +2,13 @@ import {
   cloneElement,
   createContext,
   useContext,
-  useEffect,
   useRef,
   useState,
 } from 'react';
 import { createPortal } from 'react-dom';
 import { HiXMark } from 'react-icons/hi2';
 import styled from 'styled-components';
+import useModal from '../hooks/useModal';
 
 const StyledModal = styled.div`
   position: fixed;
@@ -84,18 +84,7 @@ function Window({ children, name }) {
   const { openName, close } = useContext(ModalContext);
   const ref = useRef();
 
-  useEffect(
-    function () {
-      function handleClick(e) {
-        if (ref.current && !ref.current.contains(e.target)) close();
-      }
-
-      document.addEventListener('click', handleClick, true);
-
-      return () => document.removeEventListener('click', handleClick, true);
-    },
-    [close],
-  );
+  useModal(ref, close);
 
   if (name !== openName) return null;
 
