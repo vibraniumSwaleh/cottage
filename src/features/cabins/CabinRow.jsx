@@ -6,6 +6,7 @@ import { HiPencilSquare, HiSquare2Stack, HiTrash } from 'react-icons/hi2';
 import { useCreateCabin } from './useCreateCabin';
 import Modal from '../../ui/Modal';
 import ConfirmDelete from '../../ui/ConfirmDelete';
+import Table from '../../ui/Table';
 
 const TableRow = styled.div`
   display: grid;
@@ -68,7 +69,7 @@ function CabinRow({ cabin, setActiveCabinId, isActive }) {
     image,
     description,
   } = cabin;
-  // console.log('CabinRow: ', cabin);
+
   function handleDuplicate() {
     createCabin({
       name: `copy of ${name}`,
@@ -79,11 +80,10 @@ function CabinRow({ cabin, setActiveCabinId, isActive }) {
       image,
     });
   }
-  //console.log('newCabin: ', newCabin);
 
   return (
     <>
-      <TableRow role='row'>
+      <Table.Row>
         <Img src={image} />
         <Cabin>{name}</Cabin>
         <div>Fit up to {maxCapacity} guests</div>
@@ -108,12 +108,12 @@ function CabinRow({ cabin, setActiveCabinId, isActive }) {
               <CreateCabinForm cabinToEdit={cabin} />
             </Modal.Window>
 
-            <Modal.Open>
+            <Modal.Open opens='delete'>
               <button>
                 <HiTrash />
               </button>
             </Modal.Open>
-            <Modal.Window>
+            <Modal.Window name='delete'>
               <ConfirmDelete
                 resourceName='cabins'
                 disabled={isDeleting}
@@ -122,7 +122,7 @@ function CabinRow({ cabin, setActiveCabinId, isActive }) {
             </Modal.Window>
           </Modal>
         </ButtonGroup>
-      </TableRow>
+      </Table.Row>
     </>
   );
 }
