@@ -2,13 +2,10 @@ import styled from 'styled-components';
 import { formatCurrency } from '../../utils/helpers';
 import CreateCabinForm from './CreateCabinForm';
 import { useDeleteCabin } from './useDeleteCabin';
-import {
-  HiOutlinePencil,
-  HiPencilSquare,
-  HiSquare2Stack,
-  HiTrash,
-} from 'react-icons/hi2';
+import { HiPencilSquare, HiSquare2Stack, HiTrash } from 'react-icons/hi2';
 import { useCreateCabin } from './useCreateCabin';
+import Modal from '../../ui/Modal';
+import ConfirmDelete from '../../ui/ConfirmDelete';
 
 const TableRow = styled.div`
   display: grid;
@@ -100,19 +97,32 @@ function CabinRow({ cabin, setActiveCabinId, isActive }) {
           <button onClick={handleDuplicate}>
             <HiSquare2Stack />
           </button>
-          <button onClick={() => setActiveCabinId(isActive ? null : cabinId)}>
-            {isActive ? <HiPencilSquare /> : <HiOutlinePencil />}
-          </button>
-          <button onClick={() => deleteCabin(cabinId)} disabled={isDeleting}>
-            <HiTrash />
-          </button>
+
+          <Modal>
+            <Modal.Open opens='edit'>
+              <button>
+                <HiPencilSquare />
+              </button>
+            </Modal.Open>
+            <Modal.Window name='edit'>
+              <CreateCabinForm cabinToEdit={cabin} />
+            </Modal.Window>
+
+            <Modal.Open>
+              <button>
+                <HiTrash />
+              </button>
+            </Modal.Open>
+            <Modal.Window>
+              <ConfirmDelete
+                resourceName='cabins'
+                disabled={isDeleting}
+                onConfirm={() => deleteCabin(cabinId)}
+              />
+            </Modal.Window>
+          </Modal>
         </ButtonGroup>
       </TableRow>
-      {isActive && (
-        <ShowForm>
-          <CreateCabinForm cabinToEdit={cabin} />
-        </ShowForm>
-      )}
     </>
   );
 }
