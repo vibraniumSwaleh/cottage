@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { HiEllipsisVertical } from 'react-icons/hi2';
 import styled from 'styled-components';
 
@@ -67,21 +68,29 @@ const MenuContext = createContext();
 
 function Menus({ children }) {
   const [openId, setOpenId] = useState('');
+  const [position, setPosition] = useState('');
   const open = setOpenId;
   const close = () => setOpenId('');
 
   return (
-    <MenuContext.Provider value={{ openId, open, close }}>
+    <MenuContext.Provider
+      value={{ openId, open, close, position, setPosition }}
+    >
       {children}
     </MenuContext.Provider>
   );
 }
 
 function Toggle({ id }) {
-  const { openId, open, close } = useContext(MenuContext);
+  const { openId, open, close, setPosition } = useContext(MenuContext);
 
-  function handleClick() {
+  function handleClick(e) {
     openId === '' || openId !== id ? open(id) : close();
+    const rect = e.target.closest('button').getBoundingClientRect();
+    setPosition({
+      x: window.innerWidth - rect.width - rect.x,
+      y: rect.y + rect.height + 8,
+    });
   }
 
   return (
@@ -91,11 +100,14 @@ function Toggle({ id }) {
   );
 }
 function List({ children, id }) {
-  const { openId } = useContext(MenuContext);
+  const { openId, position } = useContext(MenuContext);
 
   if (openId !== id) return null;
 
-  return <StyledList position={{ x: 200, y: 20 }}>{children}</StyledList>;
+  return createPortal(
+    <StyledList position={position}>{children}</StyledList>,
+    document.body,
+  );
 }
 function Button({ children }) {
   return (
