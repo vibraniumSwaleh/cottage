@@ -49,7 +49,7 @@ function Filter() {
       <FilterButton onClick={() => handleClick('no-discount')}>
         No discount
       </FilterButton>
-      <FilterButton onClick={() => handleClick('with-discoutn')}>
+      <FilterButton onClick={() => handleClick('with-discount')}>
         With discount
       </FilterButton>
     </StyledFilter>
