@@ -18,10 +18,10 @@ function CabinTable() {
       filteredCabins = cabins;
       break;
     case 'no-discount':
-      filteredCabins = cabins.filter((cabin) => cabin.discount === 0);
+      filteredCabins = cabins?.filter((cabin) => cabin.discount === 0);
       break;
     case 'with-discount':
-      filteredCabins = cabins.filter((cabin) => cabin.discount > 0);
+      filteredCabins = cabins?.filter((cabin) => cabin.discount > 0);
       break;
     default:
       filteredCabins = cabins;
