@@ -21,7 +21,7 @@ function CabinTableOperations() {
           { value: 'regularPrice-asc', label: 'Price (low to high)' },
           { value: 'regularPrice-desc', label: 'Price (high to low)' },
           { value: 'maxCapacity-asc', label: 'Capacity (low to high)' },
-          { value: 'regularCapacity-desc', label: 'Capacity (high to low)' },
+          { value: 'maxCapacity-desc', label: 'Capacity (high to low)' },
         ]}
       />
     </TableOperations>

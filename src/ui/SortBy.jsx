@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 
 function SortBy({ options }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const sortBy = searchParams.get('sortBy') || '';
+  const sortBy = searchParams.get('sortBy') || 'name-asc';
 
   function handleChange(e) {
     searchParams.set('sortBy', e.target.value);
