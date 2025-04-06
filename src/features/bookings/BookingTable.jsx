@@ -44,7 +44,12 @@ function BookingTable() {
       break;
   }
 
-  if (!bookings.length) return <Empty resourceName='bookings' />;
+  const sortBy = searchParams.get('sortBy') || 'amount-asc';
+  const [field, direction] = sortBy.split('-');
+  const modifier = direction === 'asc' ? 1 : -1;
+  const sortedBookings = filteredBookings?.sort(
+    (a, b) => (a[field] - b[field]) * modifier,
+  );
 
   return (
     <Menus>
@@ -59,7 +64,7 @@ function BookingTable() {
         </Table.Header>
 
         <Table.Body
-          data={filteredBookings}
+          data={sortedBookings}
           render={(booking) => (
             <BookingRow key={booking.id} booking={booking} />
           )}

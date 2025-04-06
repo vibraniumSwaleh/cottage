@@ -16,16 +16,12 @@ function BookingsTableOperations() {
         ]}
       />
 
-      {/* <SortBy
+      <SortBy
         options={[
-          { value: 'name-asc', label: 'Name (A-Z)' },
-          { value: 'name-desc', label: 'Name (Z-A)' },
-          { value: 'regularPrice-asc', label: 'Price (low to high)' },
-          { value: 'regularPrice-desc', label: 'Price (high to low)' },
-          { value: 'maxCapacity-asc', label: 'Capacity (low to high)' },
-          { value: 'maxCapacity-desc', label: 'Capacity (high to low)' },
+          { value: 'totalPrice-asc', label: 'Amount (low to high)' },
+          { value: 'totalPrice-desc', label: 'Amount (high to low)' },
         ]}
-      /> */}
+      />
     </TableOperations>
   );
 }
