@@ -7,49 +7,9 @@ import Spinner from '../../ui/Spinner';
 import { useSearchParams } from 'react-router-dom';
 
 function BookingTable() {
-  const [searchParams] = useSearchParams();
-  const { isLoading, bookings, error } = useBookings();
+  const { bookings, isLoading, error } = useBookings();
 
   if (isLoading) return <Spinner />;
-
-  const filteredValue = searchParams.get('status');
-
-  let filteredBookings;
-  switch (filteredValue) {
-    case 'all':
-      filteredBookings = bookings;
-      break;
-    case 'confirmed':
-      filteredBookings = bookings?.filter(
-        (booking) => booking.status === 'confirmed',
-      );
-      break;
-    case 'checked-in':
-      filteredBookings = bookings?.filter(
-        (booking) => booking.status === 'checked-in',
-      );
-      break;
-    case 'checked-out':
-      filteredBookings = bookings?.filter(
-        (booking) => booking.status === 'checked-out',
-      );
-      break;
-    case 'unconfirmed':
-      filteredBookings = bookings?.filter(
-        (booking) => booking.status === 'unconfirmed',
-      );
-      break;
-    default:
-      filteredBookings = bookings;
-      break;
-  }
-
-  const sortBy = searchParams.get('sortBy') || 'amount-asc';
-  const [field, direction] = sortBy.split('-');
-  const modifier = direction === 'asc' ? 1 : -1;
-  const sortedBookings = filteredBookings?.sort(
-    (a, b) => (a[field] - b[field]) * modifier,
-  );
 
   return (
     <Menus>
@@ -64,7 +24,7 @@ function BookingTable() {
         </Table.Header>
 
         <Table.Body
-          data={sortedBookings}
+          data={bookings}
           render={(booking) => (
             <BookingRow key={booking.id} booking={booking} />
           )}
