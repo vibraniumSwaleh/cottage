@@ -5,6 +5,7 @@ import Empty from '../../ui/Empty';
 import { useBookings } from './useBookings';
 import Spinner from '../../ui/Spinner';
 import { useSearchParams } from 'react-router-dom';
+import Pagination from '../../ui/Pagination';
 
 function BookingTable() {
   const { bookings, isLoading, error } = useBookings();
@@ -29,6 +30,10 @@ function BookingTable() {
             <BookingRow key={booking.id} booking={booking} />
           )}
         />
+
+        <Table.Footer>
+          <Pagination />
+        </Table.Footer>
       </Table>
     </Menus>
   );
