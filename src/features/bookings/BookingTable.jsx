@@ -32,7 +32,7 @@ function BookingTable() {
         />
 
         <Table.Footer>
-          <Pagination />
+          <Pagination count={100} />
         </Table.Footer>
       </Table>
     </Menus>
