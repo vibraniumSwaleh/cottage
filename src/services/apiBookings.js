@@ -6,6 +6,7 @@ export async function getBookings({ filter, sortByValue }) {
     .from('bookings')
     .select(
       'id, created_at, startDate, endDate, numNights, numGuests, status, totalPrice, cabins(name), guests(fullName, email)',
+      { count: 'exact' },
     );
 
   if (filter)
@@ -16,14 +17,14 @@ export async function getBookings({ filter, sortByValue }) {
       ascending: sortByValue.direction === 'asc',
     });
 
-  const { data, error } = await query;
+  const { data, error, count } = await query;
 
   if (error) {
     console.error(error);
     throw new Error('Bookings could not get loaded');
   }
 
-  return data;
+  return { data, count };
 }
 
 export async function getBooking(id) {

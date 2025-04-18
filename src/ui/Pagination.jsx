@@ -78,6 +78,8 @@ function Pagination({ count }) {
     setSearchParams(searchParams);
   }
 
+  if (pageCount <= 1) return null;
+
   return (
     <StyledPagination>
       <p>
@@ -85,7 +87,7 @@ function Pagination({ count }) {
         <span>
           {currentPage === pageCount ? count : currentPage * PAGE_SIZE}
         </span>{' '}
-        results
+        results of <span>{count}</span>
       </p>
 
       <Buttons>

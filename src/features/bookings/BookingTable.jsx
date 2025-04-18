@@ -1,14 +1,12 @@
 import BookingRow from './BookingRow';
 import Table from '../../ui/Table';
 import Menus from '../../ui/Menus';
-import Empty from '../../ui/Empty';
 import { useBookings } from './useBookings';
 import Spinner from '../../ui/Spinner';
-import { useSearchParams } from 'react-router-dom';
 import Pagination from '../../ui/Pagination';
 
 function BookingTable() {
-  const { bookings, isLoading, error } = useBookings();
+  const { bookings, isLoading, error, count } = useBookings();
 
   if (isLoading) return <Spinner />;
 
@@ -32,7 +30,7 @@ function BookingTable() {
         />
 
         <Table.Footer>
-          <Pagination count={100} />
+          <Pagination count={count} />
         </Table.Footer>
       </Table>
     </Menus>
