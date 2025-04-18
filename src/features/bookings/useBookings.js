@@ -22,7 +22,7 @@ export function useBookings() {
 
   const { isLoading, data, error } = useQuery({
     queryKey: ['bookings', filter, sortByValue, page],
-    queryFn: () => getBookings({ filter, sortByValue }),
+    queryFn: () => getBookings({ filter, sortByValue, page }),
   });
   const bookings = data?.data;
   const count = data?.count;
