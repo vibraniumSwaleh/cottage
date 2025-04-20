@@ -46,11 +46,28 @@ function CheckinBooking() {
     numNights,
   } = booking;
 
-  const brakfastPrice = settings?.breakfastPrice * numNights * numGuests;
+  const optionalBreakfastPrice =
+    settings?.breakfastPrice * numNights * numGuests;
+  console.log('breakfastPrice: ', settings?.breakfastPrice);
+  console.log('numGuests: ', numGuests);
+  console.log('Nights:', numNights);
+  if (checkIsBreakfast)
+    console.log('optionalBreakfastPrice: ', optionalBreakfastPrice);
 
   function handleCheckin() {
     if (!checkIsPaid) return;
-    checkin(bookingId);
+    if (checkIsBreakfast) {
+      checkin({
+        bookingId,
+        breakfast: {
+          hasBreakfast: true,
+          extrasPrice: optionalBreakfastPrice,
+          totalPrice: totalPrice + optionalBreakfastPrice,
+        },
+      });
+    } else {
+      checkin({ bookingId, breakfast: {} });
+    }
   }
 
   if (isCheckingIn) return <Spinner />;
@@ -89,9 +106,9 @@ function CheckinBooking() {
           <strong>
             {checkIsBreakfast
               ? `${formatCurrency(
-                  totalPrice + brakfastPrice,
+                  totalPrice + optionalBreakfastPrice,
                 )} (${formatCurrency(totalPrice)} + ${formatCurrency(
-                  brakfastPrice,
+                  optionalBreakfastPrice,
                 )})`
               : formatCurrency(totalPrice)}
           </strong>
