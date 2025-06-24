@@ -12,9 +12,11 @@ import {
   HiArrowUpOnSquare,
   HiEye,
   HiPencilSquare,
+  HiXCircle,
 } from 'react-icons/hi2';
 import { useNavigate } from 'react-router-dom';
 import { useCheckout } from '../check-in-out/useCheckout';
+import { useDeleteBooking } from './useDeleteBooking';
 
 const Cabin = styled.div`
   font-size: 1.6rem;
@@ -59,6 +61,7 @@ function BookingRow({
 }) {
   const navigate = useNavigate();
   const { checkout, isCheckingOut } = useCheckout();
+  const { deleteBooking, isDeleting } = useDeleteBooking();
 
   const statusToTagName = {
     unconfirmed: 'blue',
@@ -120,6 +123,14 @@ function BookingRow({
               Check out
             </Menus.Button>
           )}
+
+          <Menus.Button
+            icon={<HiXCircle />}
+            onClick={() => deleteBooking(bookingId)}
+            disabled={isDeleting}
+          >
+            Delete
+          </Menus.Button>
         </Menus.List>
       </Menus.Menu>
     </Table.Row>
