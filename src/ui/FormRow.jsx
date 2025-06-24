@@ -1,12 +1,16 @@
 import styled from 'styled-components';
 
 const StyledFormRow = styled.div`
-  display: grid;
+  /* display: grid;
   align-items: center;
-  grid-template-columns: 24rem 1fr 1.2fr;
+  grid-template-columns: 0.5fr 1fr;
   gap: 2.4rem;
 
-  padding: 1.2rem 0;
+  padding: 1.2rem 0; */
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 1.6rem;
 
   &:first-child {
     padding-top: 0;
