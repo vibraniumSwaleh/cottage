@@ -10,12 +10,17 @@ const Img = styled.img`
   border-radius: 100%;
 `;
 
+const StyledParagraph = styled.p`
+  font-size: 2rem;
+  font-weight: 500;
+`;
+
 function Logo() {
   return (
     <StyledLogo>
       <>
         <Img src='/cottage.webp' alt='Logo' />
-        <p>COTTAGE</p>
+        <StyledParagraph>COTTAGE</StyledParagraph>
       </>
     </StyledLogo>
   );
