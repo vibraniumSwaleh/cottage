@@ -9,9 +9,9 @@ export function useLogin() {
 
   const { mutate: login, isLoading } = useMutation({
     mutationFn: ({ email, password }) => loginApi({ email, password }),
-    onSuccess: async (user) => {
+    onSuccess: (user) => {
       console.log('Login successful', user);
-      await queryClient.refetchQueries(['user'], user);
+      queryClient.setQueryData(['user'], user.user);
       navigate('/dashboard');
     },
     onError: (error) => {
