@@ -10,12 +10,10 @@ export function useLogin() {
   const { mutate: login, isLoading } = useMutation({
     mutationFn: ({ email, password }) => loginApi({ email, password }),
     onSuccess: (user) => {
-      console.log('Login successful', user);
       queryClient.setQueryData(['user'], user.user);
       navigate('/dashboard');
     },
     onError: (error) => {
-      console.log('Login failed', error);
       toast.error('Login failed. Please check your credentials and try again.');
     },
   });
