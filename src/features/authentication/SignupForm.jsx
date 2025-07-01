@@ -3,15 +3,21 @@ import Button from '../../ui/Button';
 import Form from '../../ui/Form';
 import FormRow from '../../ui/FormRow';
 import Input from '../../ui/Input';
-
-// Email regex: /\S+@\S+\.\S+/
+import { useSignUp } from './useSignUp';
+import SpinnerMini from '../../ui/SpinnerMini';
 
 function SignupForm() {
-  const { register, formState, getValues, handleSubmit } = useForm();
+  const { signUp, isLoading } = useSignUp();
+  const { register, formState, getValues, handleSubmit, reset } = useForm();
   const { errors } = formState;
 
   function onSubmit(data) {
-    console.log('Form submitted:', data);
+    signUp(
+      { ...data },
+      {
+        onSettled: () => reset(),
+      },
+    );
   }
 
   return (
@@ -72,7 +78,9 @@ function SignupForm() {
         <Button variation='secondary' type='reset'>
           Cancel
         </Button>
-        <Button>Create new user</Button>
+        <Button disabled={isLoading}>
+          {!isLoading ? 'Create new user' : <SpinnerMini />}
+        </Button>
       </FormRow>
     </Form>
   );
