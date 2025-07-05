@@ -1,15 +1,19 @@
-import { useState } from "react";
+import { useRef, useState } from 'react';
 
-import Button from "../../ui/Button";
-import FileInput from "../../ui/FileInput";
-import Form from "../../ui/Form";
-import FormRow from "../../ui/FormRow";
-import Input from "../../ui/Input";
+import Button from '../../ui/Button';
+import FileInput from '../../ui/FileInput';
+import Form from '../../ui/Form';
+import FormRow from '../../ui/FormRow';
+import Input from '../../ui/Input';
 
-import { useUser } from "./useUser";
+import { useUser } from './useUser';
+import { useUpdateUser } from './useUpdateUser';
+import SpinnerMini from '../../ui/SpinnerMini';
 
 function UpdateUserDataForm() {
-  // We don't need the loading state, and can immediately use the user data, because we know that it has already been loaded at this point
+  const { updateCurrentUser, isLoading } = useUpdateUser();
+  const fileInputRef = useRef();
+
   const {
     user: {
       email,
@@ -22,33 +26,65 @@ function UpdateUserDataForm() {
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    if (!fullName) return;
+
+    updateCurrentUser(
+      { fullName, avatar },
+      {
+        onSuccess: () => {
+          setFullName('');
+          if (fileInputRef.current) fileInputRef.current.value = '';
+        },
+      },
+    );
+  }
+
+  function handleCancel() {
+    setFullName(currentFullName);
+    setAvatar(null);
+    if (fileInputRef.current) fileInputRef.current.value = '';
   }
 
   return (
     <Form onSubmit={handleSubmit}>
-      <FormRow label="Email address">
+      <FormRow label='Email address'>
         <Input value={email} disabled />
       </FormRow>
-      <FormRow label="Full name">
+
+      <FormRow label='Full name'>
         <Input
-          type="text"
+          type='text'
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
-          id="fullName"
+          id='fullName'
+          disabled={isLoading}
         />
       </FormRow>
-      <FormRow label="Avatar image">
+
+      <FormRow label='Avatar image'>
         <FileInput
-          id="avatar"
-          accept="image/*"
+          ref={fileInputRef}
+          id='avatar'
+          accept='image/*'
           onChange={(e) => setAvatar(e.target.files[0])}
+          disabled={isLoading}
         />
       </FormRow>
+
       <FormRow>
-        <Button type="reset" variation="secondary">
+        <Button
+          type='reset'
+          variation='secondary'
+          disabled={isLoading}
+          onClick={handleCancel}
+        >
           Cancel
         </Button>
-        <Button>Update account</Button>
+
+        <Button disabled={isLoading}>
+          {isLoading ? <SpinnerMini /> : 'Update account'}
+        </Button>
       </FormRow>
     </Form>
   );

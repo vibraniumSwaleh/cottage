@@ -1,6 +1,7 @@
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-const FileInput = styled.input.attrs({type:'file'})`
+const StyledFileInput = styled.input.attrs({ type: 'file' })`
   font-size: 1.4rem;
   border-radius: var(--border-radius-sm);
 
@@ -21,5 +22,9 @@ const FileInput = styled.input.attrs({type:'file'})`
     }
   }
 `;
+
+const FileInput = React.forwardRef(function FileInput(props, ref) {
+  return <StyledFileInput {...props} ref={ref} />;
+});
 
 export default FileInput;
