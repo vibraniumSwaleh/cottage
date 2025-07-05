@@ -9,7 +9,8 @@ export function useUpdateUser() {
     mutationFn: updateCurrentUserApi,
     onSuccess: (user) => {
       toast.success('User data updated successfully');
-      queryClient.invalidateQueries({ queryKeys: ['user'] });
+      queryClient.setQueryData(['user'], user.user);
+      // queryClient.invalidateQueries({ queryKeys: ['user'] });
     },
     onError: (error) => {
       toast.error(`Failed to update user data: ${error.message}`);
