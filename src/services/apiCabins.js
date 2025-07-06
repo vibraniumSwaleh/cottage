@@ -53,4 +53,6 @@ export async function deleteCabin(id) {
   const { error: imageDeleteError } = await supabase.storage
     .from('cabin-images')
     .remove(['folder/avatar1.png']);
+
+  if (imageDeleteError) throw new Error('Image could not be deleted');
 }

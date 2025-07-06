@@ -42,9 +42,9 @@ const ButtonGroup = styled.div`
   gap: 0.6rem;
 `;
 
-const ShowForm = styled.div`
-  border-bottom: 1.5px solid var(--color-grey-400);
-`;
+// const ShowForm = styled.div`
+//   border-bottom: 1.5px solid var(--color-grey-400);
+// `;
 
 function CabinRow({ cabin }) {
   const { isCreating, createCabin } = useCreateCabin();
@@ -99,7 +99,11 @@ function CabinRow({ cabin }) {
             <Menus.Toggle id={cabinId} />
 
             <Menus.List id={cabinId}>
-              <Menus.Button icon={<HiSquare2Stack />} onClick={handleDuplicate}>
+              <Menus.Button
+                icon={<HiSquare2Stack />}
+                onClick={handleDuplicate}
+                disabled={isCreating}
+              >
                 Duplicate
               </Menus.Button>
 

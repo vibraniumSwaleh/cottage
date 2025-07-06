@@ -27,7 +27,7 @@ const HeadingGroup = styled.div`
 function BookingDetail() {
   const { bookingId } = useParams();
   const navigate = useNavigate();
-  const { booking, isLoading, error } = useBooking();
+  const { booking, isLoading } = useBooking();
   const { checkout, isCheckingOut } = useCheckout();
   const { deleteBooking, isDeleting } = useDeleteBooking();
 

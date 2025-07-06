@@ -11,7 +11,6 @@ import {
   HiArrowDownOnSquare,
   HiArrowUpOnSquare,
   HiEye,
-  HiPencilSquare,
   HiTrash,
   HiXCircle,
 } from 'react-icons/hi2';
